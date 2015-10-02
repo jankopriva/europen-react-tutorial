@@ -1,92 +1,91 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-let rootElement = document.getElementById('root');
+function Square(props) {
+    let { x, y, piece } = props;
 
-class Square extends React.Component {
-    onClick() {
-        this.props.onClick(this.props.x, this.props.y);
-    }
-   render() {
-      let squareColor = (this.props.x % 2) === (this.props.y % 2) ? 'white' : 'black';
-
-      let styles = {
-       fontSize: 24,
-       textAlign: 'center',
-        backgroundColor: squareColor,
-        color: squareColor === 'white' ? 'black' : 'white',
+    let styles = {
         width: '12.5%',
         height: '12.5%'
-      };
 
-      return <div style={styles} onClick={::this.onClick}>{this.props.piece}</div>;
-   }
+        backgroundColor: 'black',
+        color: 'white',
+
+        fontSize: 24,
+        textAlign: 'center',
+    };
+
+    if (x % 2 === y % 2) {
+        styles.WebkitFilter = 'invert(100%)';
+    }
+
+    let clickHandler = () => props.onClick(x, y);
+
+    return <div style={styles} onClick={clickHandler}>{piece}</div>;
 }
 
 class ChessBoard extends React.Component {
-   constructor() {
+    constructor() {
         super(...arguments);
 
         this.state = { pieces: [] };
-   }
-
-  renderSquares() {
-    let squares = [];
-
-    for (let i = 0; i < 64; i++) {
-      let y = Math.floor(i / 8),
-          x = i % 8;
-
-      squares.push(
-        <Square
-            key={i}
-            x={x}
-            y={y}
-            piece={this.state.pieces[i]}
-            onClick={::this.addPiece} />);
     }
 
-    return squares;
-  }
+    renderSquares() {
+        let squares = [];
 
-  addPiece(x, y) {
-    let pieces = this.state.pieces,
-        index = y * 8 + x;
+        for (let i = 0; i < 64; i++) {
+            squares.push(
+                <Square
+                    key={i}
+                    x={i % 8}
+                    y={Math.floor(i / 8)}
+                    piece={this.state.pieces[i]}
+                    onClick={::this.addPiece}
+                />
+            );
+        }
 
-    if (pieces[index]) {
-        delete pieces[index];
-    } else {
-        pieces[index] = '♕';
+        return squares;
     }
 
-    this.setState({ pieces });
-  }
+    addPiece(x, y) {
+        let { pieces } = this.state,
+            index = (y * 8) + x;
 
-  onReset() {
-    this.setState({ pieces: [] });
-  }
+        if (pieces[index]) {
+            delete pieces[index];
+        } else {
+            pieces[index] = '♕';
+        }
 
-  render() {
-    let styles = {
-      display: 'flex',
-      flexWrap: 'wrap',
-      width: 300,
-      height: 300
-    };
+        this.setState({ pieces });
+    }
 
-    let squares = this.renderSquares();
+    onReset() {
+        this.setState({ pieces: [] });
+    }
 
-    return (
-        <div>
-            <button onClick={::this.onReset}>Reset</button>
-            <div style={styles}>
-              {squares}
+    render() {
+        let styles = {
+            WebkitUserSelect: 'none',
+            display: 'flex',
+            flexWrap: 'wrap',
+            width: 300,
+            height: 300
+        };
+
+        return (
+            <div>
+                <button onClick={::this.onReset} style={{ marginBottom: 10 }}>Reset</button>
+
+                <div style={styles}>
+                    {this.renderSquares()}
+                </div>
             </div>
-        </div>
-    );
-  }
+        );
+    }
 }
 
-
-
+let rootElement = document.getElementById('root');
 ReactDOM.render(<ChessBoard />, rootElement);
