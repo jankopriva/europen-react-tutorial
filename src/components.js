@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 
 export class TodoItem extends Component {
   render() {
-  const {item} = this.props;
+    const {item} = this.props;
     return(
-      <li>{item.text}</li>
+      <li><input type='checkbox' checked={item.completed} onChange={this.props.onTodoChecked}/>{item.text}</li>
     );
   }
 }
@@ -16,7 +16,7 @@ export class TodoList extends Component {
     return (
         <ul>
         {todos.map((todo, index) => {
-            return <TodoItem key={index} item={todo} />
+            return <TodoItem key={index} item={todo} onTodoChecked={() => this.props.onTodoChecked(index)} />
         })}
         </ul>
     );

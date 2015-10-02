@@ -2,19 +2,22 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import {TodoList, AddTodo} from './components';
-import {addTodo} from './actions';
+import {addTodo, checkTodo} from './actions';
 
 class App extends Component {
   onTodoEntered(value) {
-    console.log('Todo entered:', value);
     this.props.dispatch(addTodo(value));
+  }
+
+  onTodoChecked(id) {
+    this.props.dispatch(checkTodo(id));
   }
 
   render() {
     return (
       <div>
         <AddTodo onTodoEntered={::this.onTodoEntered} />
-        <TodoList todos={this.props.todos}/>
+        <TodoList todos={this.props.todos} onTodoChecked={::this.onTodoChecked}/>
       </div>
     );
   }
