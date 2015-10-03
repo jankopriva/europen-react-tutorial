@@ -24,13 +24,13 @@ export class TodoList extends Component {
 }
 
 export class AddTodo extends Component {
-  onBlur(e) {
-    this.props.onTodoEntered(e.currentTarget.value);
-  }
+  onKeyDown(e) {
+    if (e.keyCode === 13) this.props.onTodoEntered(e.currentTarget.value);}
 
   render() {
     return (
-      <input type='text' placeholder='Enter todo' onBlur={::this.onBlur} />
-    )
+      <input type='text' placeholder='Enter todo'
+       onKeyDown={::this.onKeyDown} />
+     )
   }
 }

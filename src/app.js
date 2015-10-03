@@ -23,8 +23,9 @@ class App extends Component {
   }
 }
 
-// returns object whose keys will be injected as props
-// of the smart component
+// Returns object whose keys will be injected as props
+// of the smart component and
+// dispatch() is injected in the props
 function select(state) {
   return {
     todos: state.todos
