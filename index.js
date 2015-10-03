@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './css/skeleton.css';
+
 import {createStore} from 'redux';
 import { Provider } from 'react-redux';
 
 import {addTodo} from './src/actions';
 import {todoApp} from './src/reducers';
 import App from './src/app';
+
 
 let store = createStore(todoApp);
 const unsubscribe = store.subscribe(() => {

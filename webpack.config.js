@@ -24,6 +24,8 @@ module.exports = {
       query: {stage: 0},
       exclude: /node_modules/,
       include: __dirname
+    }, {
+      test: /\.css$/, loader: "style-loader!css-loader"
     }]
   }
 };
