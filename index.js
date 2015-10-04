@@ -6,13 +6,13 @@ function Square(props) {
 
     let styles = {
         width: '12.5%',
-        height: '12.5%'
+        height: '12.5%',
 
         backgroundColor: 'black',
         color: 'white',
 
         fontSize: 24,
-        textAlign: 'center',
+        textAlign: 'center'
     };
 
     if (x % 2 === y % 2) {
